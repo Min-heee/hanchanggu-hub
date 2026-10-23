@@ -1,0 +1,458 @@
+{
+  "_comment": "가상 고객 데이터. 날짜는 실행일 기준 상대값(-7d = 7일 전)으로 적고 불러올 때 실제 날짜로 바꿉니다. marketing_consent는 광고성 정보 수신 동의, kakao_friend는 병원 카카오톡 채널 친구 여부, consent_events는 그 값이 언제·어떤 경로로 정해졌는지입니다.",
+  "customers": [
+    {
+      "id": "C001",
+      "name": "김지수",
+      "phone": "010-2345-6789",
+      "email": "jisu.kim@example.com",
+      "language": "ko",
+      "channel_ids": {
+        "kakao": "k_jisu",
+        "instagram": "ig_jisu.k"
+      },
+      "tags": [
+        "코성형 관심",
+        "견적 전달"
+      ],
+      "consultations": [
+        {
+          "date": "-23d",
+          "procedure": "코성형",
+          "counselor": "박하은 실장",
+          "status": "고민중",
+          "note": "콧대·코끝 상담, 견적서 전달. 12월 수술 희망, 회사 휴가 기간 걱정"
+        }
+      ],
+      "appointments": [],
+      "marketing_consent": true,
+      "kakao_friend": true,
+      "consent_events": [
+        {
+          "at": "-728d",
+          "field": "marketing_consent",
+          "value": true,
+          "source": "홈페이지 회원가입"
+        },
+        {
+          "at": "-728d",
+          "field": "kakao_friend",
+          "value": true,
+          "source": "카카오 채널 추가"
+        }
+      ]
+    },
+    {
+      "id": "C002",
+      "name": "이민호",
+      "phone": "010-3456-7890",
+      "email": "",
+      "language": "ko",
+      "channel_ids": {
+        "naver": "nt_minho"
+      },
+      "tags": [
+        "수술 완료"
+      ],
+      "consultations": [
+        {
+          "date": "-30d",
+          "procedure": "눈매교정+쌍꺼풀(절개)",
+          "counselor": "정유진 실장",
+          "status": "수술결정",
+          "note": ""
+        }
+      ],
+      "appointments": [
+        {
+          "date": "-7d",
+          "kind": "수술",
+          "procedure": "눈매교정+쌍꺼풀(절개)",
+          "status": "완료"
+        },
+        {
+          "date": "+1d",
+          "kind": "경과",
+          "procedure": "실밥 제거",
+          "status": "예정",
+          "time": "14:00"
+        },
+        {
+          "date": "+30d",
+          "kind": "경과",
+          "procedure": "1개월 경과 확인",
+          "status": "예정",
+          "time": "11:00"
+        }
+      ],
+      "marketing_consent": false,
+      "kakao_friend": true,
+      "consent_events": [
+        {
+          "at": "-30d",
+          "field": "kakao_friend",
+          "value": true,
+          "source": "카카오 채널 추가"
+        }
+      ]
+    },
+    {
+      "id": "C003",
+      "name": "Emily Chen",
+      "phone": "",
+      "email": "emily.chen@example.com",
+      "language": "en",
+      "channel_ids": {
+        "web": "emily.chen@example.com"
+      },
+      "tags": [
+        "해외 환자",
+        "영어"
+      ],
+      "consultations": [
+        {
+          "date": "-19d",
+          "procedure": "코성형(온라인 상담)",
+          "counselor": "Grace 코디네이터",
+          "status": "방문 예정",
+          "note": "12월 방한 예정, 약 2주 체류"
+        }
+      ],
+      "appointments": [],
+      "marketing_consent": true,
+      "kakao_friend": false,
+      "consent_events": [
+        {
+          "at": "-19d",
+          "field": "marketing_consent",
+          "value": true,
+          "source": "온라인 상담 신청서"
+        }
+      ]
+    },
+    {
+      "id": "C004",
+      "name": "박서연",
+      "phone": "010-5678-1234",
+      "email": "",
+      "language": "ko",
+      "channel_ids": {
+        "kakao": "k_seoyeon"
+      },
+      "tags": [
+        "수술 완료"
+      ],
+      "consultations": [
+        {
+          "date": "-40d",
+          "procedure": "코성형",
+          "counselor": "박하은 실장",
+          "status": "수술결정",
+          "note": ""
+        }
+      ],
+      "appointments": [
+        {
+          "date": "-2d",
+          "kind": "수술",
+          "procedure": "코성형",
+          "status": "완료"
+        },
+        {
+          "date": "+4d",
+          "kind": "경과",
+          "procedure": "부목·실밥 제거",
+          "status": "예정",
+          "time": "15:30"
+        }
+      ],
+      "marketing_consent": false,
+      "kakao_friend": true,
+      "consent_events": [
+        {
+          "at": "-40d",
+          "field": "kakao_friend",
+          "value": true,
+          "source": "카카오 채널 추가"
+        }
+      ]
+    },
+    {
+      "id": "C005",
+      "name": "최유나",
+      "phone": "010-6789-2345",
+      "email": "",
+      "language": "ko",
+      "channel_ids": {
+        "instagram": "ig_yuna.c"
+      },
+      "tags": [
+        "쁘띠 재방문"
+      ],
+      "consultations": [
+        {
+          "date": "-52d",
+          "procedure": "필러(팔자)",
+          "counselor": "정유진 실장",
+          "status": "시술완료",
+          "note": ""
+        }
+      ],
+      "appointments": [
+        {
+          "date": "-52d",
+          "kind": "시술",
+          "procedure": "필러(팔자)",
+          "status": "완료"
+        }
+      ],
+      "marketing_consent": true,
+      "kakao_friend": false,
+      "consent_events": [
+        {
+          "at": "-52d",
+          "field": "marketing_consent",
+          "value": true,
+          "source": "상담 동의서"
+        }
+      ]
+    },
+    {
+      "id": "C006",
+      "name": "윤채원",
+      "phone": "010-4321-8765",
+      "email": "",
+      "language": "ko",
+      "channel_ids": {
+        "kakao": "k_chaewon"
+      },
+      "tags": [
+        "수술 완료"
+      ],
+      "marketing_consent": false,
+      "consultations": [
+        {
+          "date": "-30d",
+          "procedure": "코성형",
+          "counselor": "박하은 실장",
+          "status": "수술결정",
+          "note": ""
+        }
+      ],
+      "appointments": [
+        {
+          "date": "-1d",
+          "kind": "수술",
+          "procedure": "코성형",
+          "status": "완료"
+        },
+        {
+          "date": "+6d",
+          "kind": "경과",
+          "procedure": "부목·실밥 제거",
+          "status": "예정",
+          "time": "11:30"
+        }
+      ],
+      "kakao_friend": true,
+      "consent_events": [
+        {
+          "at": "-30d",
+          "field": "kakao_friend",
+          "value": true,
+          "source": "카카오 채널 추가"
+        }
+      ]
+    },
+    {
+      "id": "C007",
+      "name": "한도윤",
+      "phone": "010-2468-1357",
+      "email": "",
+      "language": "ko",
+      "channel_ids": {
+        "naver": "nt_doyoon"
+      },
+      "tags": [
+        "윤곽 관심"
+      ],
+      "marketing_consent": true,
+      "consultations": [
+        {
+          "date": "-16d",
+          "procedure": "안면윤곽(광대·사각턱)",
+          "counselor": "정유진 실장",
+          "status": "고민중",
+          "note": "CT 촬영 완료. 회복 기간이 길까 걱정, 내년 3월 이직 전 수술 희망"
+        }
+      ],
+      "appointments": [],
+      "kakao_friend": false,
+      "consent_events": [
+        {
+          "at": "-16d",
+          "field": "marketing_consent",
+          "value": true,
+          "source": "상담 동의서"
+        }
+      ]
+    },
+    {
+      "id": "C008",
+      "name": "서하린",
+      "phone": "010-1357-2468",
+      "email": "",
+      "language": "ko",
+      "channel_ids": {
+        "instagram": "ig_harin.s"
+      },
+      "tags": [
+        "눈성형 관심"
+      ],
+      "marketing_consent": false,
+      "consultations": [
+        {
+          "date": "-20d",
+          "procedure": "눈성형(쌍꺼풀)",
+          "counselor": "정유진 실장",
+          "status": "고민중",
+          "note": "매몰법과 절개법 사이에서 고민"
+        }
+      ],
+      "appointments": [],
+      "kakao_friend": false
+    },
+    {
+      "id": "C009",
+      "name": "오세린",
+      "phone": "010-9876-5432",
+      "email": "",
+      "language": "ko",
+      "channel_ids": {
+        "kakao": "k_serin"
+      },
+      "tags": [
+        "쁘띠 재방문"
+      ],
+      "marketing_consent": true,
+      "consultations": [
+        {
+          "date": "-95d",
+          "procedure": "보톡스(사각턱)",
+          "counselor": "정유진 실장",
+          "status": "시술완료",
+          "note": "다음에는 턱끝 필러도 상담받고 싶다고 함"
+        }
+      ],
+      "appointments": [
+        {
+          "date": "-95d",
+          "kind": "시술",
+          "procedure": "보톡스(사각턱)",
+          "status": "완료"
+        }
+      ],
+      "kakao_friend": true,
+      "consent_events": [
+        {
+          "at": "-95d",
+          "field": "marketing_consent",
+          "value": true,
+          "source": "상담 동의서"
+        },
+        {
+          "at": "-95d",
+          "field": "kakao_friend",
+          "value": true,
+          "source": "카카오 채널 추가"
+        }
+      ]
+    },
+    {
+      "id": "C010",
+      "name": "장민서",
+      "phone": "010-5555-1212",
+      "email": "",
+      "language": "ko",
+      "channel_ids": {
+        "kakao": "k_minseo"
+      },
+      "tags": [
+        "수술 완료"
+      ],
+      "marketing_consent": false,
+      "consultations": [
+        {
+          "date": "-50d",
+          "procedure": "눈성형(절개 쌍꺼풀)",
+          "counselor": "박하은 실장",
+          "status": "수술결정",
+          "note": ""
+        }
+      ],
+      "appointments": [
+        {
+          "date": "-21d",
+          "kind": "수술",
+          "procedure": "눈성형(절개 쌍꺼풀)",
+          "status": "완료"
+        },
+        {
+          "date": "-15d",
+          "kind": "경과",
+          "procedure": "실밥 제거",
+          "status": "완료"
+        }
+      ],
+      "kakao_friend": true,
+      "consent_events": [
+        {
+          "at": "-50d",
+          "field": "kakao_friend",
+          "value": true,
+          "source": "카카오 채널 추가"
+        }
+      ]
+    },
+    {
+      "id": "C011",
+      "name": "Li Na",
+      "phone": "+86 138 0013 8000",
+      "email": "lina@example.com",
+      "language": "zh",
+      "channel_ids": {
+        "instagram": "ig_lina.cn"
+      },
+      "tags": [
+        "해외 환자",
+        "중국어"
+      ],
+      "marketing_consent": false,
+      "consultations": [
+        {
+          "date": "-10d",
+          "procedure": "코성형",
+          "counselor": "Amy 코디네이터",
+          "status": "수술결정",
+          "note": ""
+        }
+      ],
+      "appointments": [
+        {
+          "date": "-1d",
+          "kind": "수술",
+          "procedure": "코성형",
+          "status": "완료"
+        },
+        {
+          "date": "+5d",
+          "kind": "경과",
+          "procedure": "부목·실밥 제거",
+          "status": "예정",
+          "time": "16:00"
+        }
+      ],
+      "kakao_friend": false
+    }
+  ]
+}

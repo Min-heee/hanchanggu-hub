@@ -1,0 +1,6 @@
+fastapi>=0.156
+uvicorn[standard]>=0.54
+anthropic>=1.17
+# 테스트
+pytest>=9.1
+httpx>=0.28

@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>한창구 · 데모성형외과</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="view-inbox">
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo" aria-hidden="true">한</div>
+      <div>
+        <h1>한창구</h1>
+        <p id="clinic-line">AI 상담 보조</p>
+      </div>
+    </div>
+    <nav class="views" id="views" aria-label="화면 전환">
+      <button data-view="inbox" class="active">문의함</button>
+      <button data-view="recall">리콜·팔로업</button>
+      <button data-view="binjari">빈자리</button>
+    </nav>
+    <dl class="stats inbox-only" id="stats"></dl>
+    <div class="actions">
+      <span class="badge" id="mode-badge"></span>
+      <span class="badge subtle" id="crm-badge"></span>
+      <button class="primary inbox-only" id="sync-btn">새 문의 가져오기</button>
+      <button class="ghost" id="reset-btn" title="데모 데이터를 처음 상태로 되돌려요">초기화</button>
+    </div>
+  </header>
+
+  <main class="layout inbox-only">
+    <aside class="inbox" aria-label="문의 목록">
+      <nav class="filters" id="filters">
+        <button data-filter="open" class="active">처리 필요</button>
+        <button data-filter="urgent">긴급</button>
+        <button data-filter="done">처리 완료</button>
+        <button data-filter="all">전체</button>
+      </nav>
+      <ul class="thread-list" id="thread-list"></ul>
+    </aside>
+
+    <section class="detail" id="detail" aria-live="polite">
+      <div class="empty">
+        <p>왼쪽에서 문의를 고르세요.</p>
+        <p class="muted">카카오톡 · 네이버 톡톡 · 인스타그램 DM · 홈페이지 상담 문의가 한곳에 모여요.</p>
+      </div>
+    </section>
+
+    <aside class="crm" id="crm" aria-label="CRM 고객 정보"></aside>
+  </main>
+
+  <main class="layout recall-layout recall-only" aria-label="리콜·팔로업">
+    <aside class="rules-panel">
+      <h3>리콜 규칙</h3>
+      <ul class="rule-list" id="rule-list"></ul>
+      <p class="muted small">규칙은 <code>data/recall_rules.json</code>에서 병원이 직접 고칠 수 있어요.</p>
+      <div class="legend small">
+        <p><span class="tag info">정보성</span> 진료 안내. 검수된 템플릿은 알림톡으로 보내고, 실패하면 문자로 대체 발송해요. AI로 개인화한 정보성 안내는 알림톡에 실을 수 없어 문자(LMS)로 가요. 수신 동의는 필요 없어요.</p>
+        <p><span class="tag ad">광고성</span> 재방문 안내. 광고 수신 동의 고객에게만 보내요. 카카오톡 채널 친구면 카카오 브랜드 메시지(구 친구톡), 아니면 문자(LMS)로 보내요. 20:50~08:00에는 보내지 않고 오전 10시로 미뤄요.</p>
+        <p><span class="tag">수신거부</span> 080·카카오 채널 차단·문의 답장으로 들어온 거부는 바로 CRM에 반영하고 준비 중인 광고를 멈춰요. 처리 결과는 14일 안에, 광고 수신 동의 사실은 2년마다 알림톡으로 알려요(법정 안내라 광고 표시 없음).</p>
+        <p><span class="tag">알림톡</span> 검수된 문구에 이름·날짜만 바꿔 넣어요. 수정할 수 없어요.</p>
+        <p><span class="tag">AI 개인화</span> CRM 이력을 보고 AI가 쓰고, 실장이 고쳐서 보내요.</p>
+        <p>승인은 예약 발송이에요. 보낼 시각 전이면 예약으로 두고, 보내기 직전에 수신 동의·채널 차단·답하지 않은 문의를 다시 확인해요.</p>
+        <p>인스타그램 DM·카카오 상담톡·네이버 톡톡 상담은 고객이 먼저 보낸 문의에 답할 때만 써요. (네이버 스마트알림처럼 먼저 보내는 상품은 이 데모에서 다루지 않아요.)</p>
+        <p>해외 번호는 국내 문자·카카오 메시지가 닿지 않아 코디네이터가 직접 안내하도록 보류해요.</p>
+      </div>
+    </aside>
+
+    <section class="detail recall-main">
+      <div class="date-bar">
+        <button class="ghost" id="day-prev" aria-label="하루 전">◀</button>
+        <div>
+          <div class="muted small">기준 날짜</div>
+          <strong id="recall-date"></strong>
+        </div>
+        <button class="ghost" id="day-next" aria-label="하루 뒤">▶</button>
+        <button class="ghost" id="day-today">오늘로</button>
+        <span class="muted small" id="recall-summary"></span>
+        <button class="primary" id="approve-info">정보성 알림 일괄 승인</button>
+      </div>
+      <div id="recall-queue"></div>
+      <h3 class="section-title" id="blocked-title">보내지 않는 대상</h3>
+      <div id="recall-blocked"></div>
+    </section>
+
+    <aside class="crm" id="recall-crm" aria-label="CRM 고객 정보"></aside>
+  </main>
+
+  <main class="binjari-view binjari-only" aria-label="빈자리">
+    <div class="binjari-bar">
+      <strong>빈자리</strong>
+      <span class="muted small">전화 예약이 오면 안건 버튼과 확인 질문 하나로 맞는 빈 시간을 찾고, 고객에게 읽어 줄 문장까지 만들어 줘요. 예약 확정은 사람이 해요.</span>
+      <a class="small" href="/binjari/" target="_blank" rel="noopener">새 창으로 열기</a>
+    </div>
+    <iframe id="binjari-frame" title="빈자리 — 전화 예약 빈 시간"></iframe>
+  </main>
+
+  <dialog id="source-dialog">
+    <form method="dialog">
+      <h3 id="source-title"></h3>
+      <p id="source-text"></p>
+      <button class="ghost">닫기</button>
+    </form>
+  </dialog>
+  <div class="toast" id="toast" role="status"></div>
+
+  <script src="app.js"></script>
+  <script src="recall.js"></script>
+</body>
+</html>

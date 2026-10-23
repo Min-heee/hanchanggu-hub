@@ -1,0 +1,62 @@
+{
+  "_comment": "채널별로 들어오는 가상 문의. batch 1은 처음 실행할 때, batch 2·3은 '새 문의 가져오기'를 누를 때마다 차례로 들어옵니다(batch 3은 수신거부 답장). 시간은 실행일 기준입니다.",
+  "messages": [
+    {
+      "id": "m01", "batch": 1, "channel": "kakao", "channel_user_id": "k_seoyeon", "sender_name": "서연",
+      "received_at": "-0d 07:48",
+      "text": "어젯밤부터 코 안쪽에서 피가 계속 나와요. 거즈를 갈아도 금방 젖고 열도 38.4도예요. 이거 정상인가요?"
+    },
+    {
+      "id": "m02", "batch": 1, "channel": "web", "channel_user_id": "emily.chen@example.com", "sender_name": "Emily Chen",
+      "email": "emily.chen@example.com",
+      "received_at": "-0d 03:15",
+      "text": "Hi, this is Emily. I had an online consultation for rhinoplasty last month. I'm planning to visit Seoul from December 8 to 22. Can I book a consultation on December 9, and will an English interpreter be available? Also, how long should I stay in Seoul after the surgery?"
+    },
+    {
+      "id": "m03", "batch": 1, "channel": "instagram", "channel_user_id": "ig_jisu.k", "sender_name": "jisu.k",
+      "received_at": "-0d 09:05",
+      "text": "안녕하세요! 혹시 코성형하면 회사는 며칠 정도 쉬어야 하나요? 부목은 언제 빼요?"
+    },
+    {
+      "id": "m04", "batch": 1, "channel": "naver", "channel_user_id": "nt_minho", "sender_name": "이민호",
+      "received_at": "-0d 09:20",
+      "text": "수술한 지 일주일 됐는데 아직 붓기랑 멍이 꽤 있어요. 내일 실밥 풀러 가는데 지금은 냉찜질 해야 하나요, 온찜질 해야 하나요? 회사는 다음 주 월요일부터 나가도 괜찮을까요?"
+    },
+    {
+      "id": "m05", "batch": 1, "channel": "web", "channel_user_id": "web_guest_5531", "sender_name": "정다은",
+      "phone": "010-7777-8888",
+      "received_at": "-0d 09:31",
+      "text": "3년 전에 다른 병원에서 쌍꺼풀 절개 수술을 했는데 한쪽 라인이 풀린 것 같아요. 재수술 상담 받고 싶은데 언제 가능한가요? 연락은 010-7777-8888로 부탁드려요."
+    },
+    {
+      "id": "m06", "batch": 1, "channel": "instagram", "channel_user_id": "ig_yuna.c", "sender_name": "yuna.c",
+      "received_at": "-0d 10:02",
+      "text": "안녕하세요~ 8월에 팔자필러 맞았는데 리터치 받고 싶어요. 그날 사각턱 보톡스도 같이 맞을 수 있나요? 둘 다 하면 가격이 얼마예요?"
+    },
+    {
+      "id": "m07", "batch": 2, "channel": "kakao", "channel_user_id": "k_jisu", "sender_name": "김지수",
+      "received_at": "-0d 10:40",
+      "text": "아 그리고 12월 둘째 주 토요일에 원장님 상담 한 번 더 받을 수 있을까요?"
+    },
+    {
+      "id": "m08", "batch": 2, "channel": "instagram", "channel_user_id": "ig_mika_jp", "sender_name": "Mika",
+      "received_at": "-0d 10:44",
+      "text": "こんにちは。二重整形の相談をしたいです。日本語の通訳はありますか？来月ソウルに行く予定です。"
+    },
+    {
+      "id": "m09", "batch": 2, "channel": "kakao", "channel_user_id": "k_mj_kang", "sender_name": "강민준",
+      "received_at": "-0d 10:50",
+      "text": "오늘 오전 상담 예약하고 갔는데 40분 넘게 기다리다가 그냥 나왔어요. 늦어지면 미리 연락이라도 주셨어야죠. 정말 실망입니다."
+    },
+    {
+      "id": "m10", "batch": 2, "channel": "naver", "channel_user_id": "nt_user_8812", "sender_name": "네이버 사용자",
+      "received_at": "-0d 10:52",
+      "text": "사각턱이랑 광대 같이 상담 받고 싶은데 토요일 오전에도 상담 되나요?"
+    },
+    {
+      "id": "m11", "batch": 3, "channel": "kakao", "channel_user_id": "k_serin", "sender_name": "세린",
+      "received_at": "-0d 11:20",
+      "text": "앞으로 이벤트나 광고 메시지는 안 받고 싶어요. 수신거부 해주세요. 그리고 보톡스는 보통 몇 달마다 맞는 게 좋아요?"
+    }
+  ]
+}
