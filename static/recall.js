@@ -42,7 +42,7 @@ function recallCard(item) {
   } else if (item.delivery === "template" || item.status !== "ready") {
     body = `<div class="fixed-text">${esc(item.text)}</div>`;
     if (item.delivery === "template" && item.status === "ready") {
-      body += `<p class="hint">알림톡은 검수된 문구에 이름·날짜만 바뀌어 들어가요. 문구를 바꾸려면 템플릿을 다시 검수받아야 해요.</p>`;
+      body += `<p class="hint">알림톡은 검수된 문구에 이름·시술·날짜 같은 값만 바뀌어 들어가요. 문구를 바꾸려면 템플릿을 다시 검수받아야 해요.</p>`;
     }
   } else {
     body = `<textarea data-edit="${item.id}">${esc(recall.edits[item.id] ?? item.text)}</textarea>
