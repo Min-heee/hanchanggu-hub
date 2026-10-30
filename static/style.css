@@ -230,18 +230,12 @@ dialog h3 { margin-top: 0; font-size: 15px; }
 
 /* ---- 화면 전환 ---- */
 body:not(.view-inbox) .inbox-only,
-body:not(.view-recall) .recall-only,
-body:not(.view-binjari) .binjari-only { display: none; }
+body:not(.view-recall) .recall-only { display: none; }
 .views { display: flex; gap: 4px; padding: 3px; border-radius: 10px; background: #f0f1f3; }
 .views button { border: none; background: transparent; padding: 6px 14px; border-radius: 8px; color: var(--muted); font-weight: 600; }
 .views button.active { background: var(--panel); color: var(--text); box-shadow: 0 1px 3px rgba(0,0,0,.08); }
 body:not(.view-inbox) .actions { margin-left: auto; }
 
-/* ---- 빈자리 (별도 도구를 그대로 띄움) ---- */
-.binjari-view { flex: 1; min-height: 0; display: flex; flex-direction: column; }
-.binjari-bar { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; padding: 10px 20px; background: var(--panel); border-bottom: 1px solid var(--line); }
-.binjari-bar a { margin-left: auto; color: var(--accent); }
-#binjari-frame { flex: 1; width: 100%; border: 0; background: var(--panel); }
 .small { font-size: 12px; }
 
 /* ---- 리콜·팔로업 ---- */

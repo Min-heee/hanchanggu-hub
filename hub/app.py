@@ -17,7 +17,6 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from . import compliance
-from .binjari_feed import build_feed, feed_js
 from .channels import ChannelRouter, MockChannels
 from .crm import CsvCRM, SqliteCRM
 from .drafting.local import LocalDrafter
@@ -394,18 +393,5 @@ def create_app(hub: Hub | None = None, recall: RecallEngine | None = None) -> Fa
     def recall_approve_info(body: PlanBody) -> dict:
         return {"approved": recall.approve_all_info(target_day(body.offset_days).isoformat())}
 
-    @app.get("/binjari/feed.js")
-    def binjari_feed(request: Request) -> Response:
-        """빈자리 탭이 읽는 바깥 입력: 지금 시각과 CRM 예약(이름·전화 없이). 읽을 때마다 새로 만든다."""
-        if request.headers.get("sec-fetch-site") in ("cross-site", "same-site"):  # 다른 사이트가 <script>로 불러 읽지 못하게
-            return Response(status_code=403)
-        js = feed_js(build_feed(hub.crm, hub.clock(), hub.clinic_name))
-        return Response(js, media_type="application/javascript; charset=utf-8", headers={"Cache-Control": "no-store"})
-
-    # 빈자리(전화 예약 빈 시간 도구, 별도 저장소)를 /binjari/ 아래에 붙인다. scripts/vendor_binjari.sh로 만든 빌드.
-    # feed.js 경로는 이 mount보다 먼저 등록해야 정적 파일보다 앞선다.
-    binjari = ROOT / "vendor" / "binjari"
-    if binjari.exists():
-        app.mount("/binjari", StaticFiles(directory=binjari, html=True), name="binjari")
     app.mount("/", StaticFiles(directory=ROOT / "static", html=True), name="static")
     return app

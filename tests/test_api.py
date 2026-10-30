@@ -26,16 +26,10 @@ def test_inbox_api_flow(hub):
     assert client.get("/").status_code == 200
 
 
-def test_binjari_is_served_under_its_own_path(hub):
-    from hub.app import ROOT
-
+def test_inbox_and_recall_only_no_binjari_tab(hub):
+    """한창구는 문의함과 리콜·팔로업 두 화면이다. 빈자리는 별도 프로젝트로 두고 여기 붙이지 않는다."""
     client = TestClient(create_app(hub))
-    page = client.get("/binjari/")
-    if not (ROOT / "vendor" / "binjari").exists():
-        assert page.status_code == 404  # 빌드를 넣지 않았으면 탭만 비고 앱은 그대로 돈다
-        return
-    assert page.status_code == 200 and "/binjari/_next/" in page.text
-    asset = page.text.split('src="/binjari/_next/', 1)[1].split('"', 1)[0]
-    assert client.get(f"/binjari/_next/{asset}").status_code == 200
-    assert client.get("/binjari/rules/").status_code == 200
+    page = client.get("/").text
+    assert 'data-view="inbox"' in page and 'data-view="recall"' in page and "binjari" not in page
+    assert client.get("/binjari/").status_code == 404
     assert "한창구" in client.get("/").text

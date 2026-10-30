@@ -4,13 +4,13 @@ import json
 from datetime import date, timedelta
 from pathlib import Path
 
-from ..binjari_rules import DOWS, clinic_hours, minutes_of
+from ..clinic_hours import DOWS, clinic_hours, minutes_of
 from ..models import Appointment, ConsentEvent, Consultation, Customer, resolve_relative
 
 
 def _open_day(raw: dict, today: date) -> dict:
     """시드의 '+N일'은 요일을 모르고 정한 값이다. 시각이 있는 예정 예약이 휴진일(일요일)이나 접수 마감 뒤에 떨어지면
-    진료하는 다음 날로 민다. (공휴일 목록은 빈자리 규칙 문서에만 있어 여기서는 일요일·영업시간만 본다.)"""
+    진료하는 다음 날로 민다. (공휴일은 아직 보지 않고 일요일·영업시간만 본다.)"""
     appt = {**raw, "date": resolve_relative(raw["date"], today)}
     if appt.get("status", "예정") != "예정" or not appt.get("time"):
         return appt

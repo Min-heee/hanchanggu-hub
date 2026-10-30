@@ -48,7 +48,7 @@ class Appointment:
     kind: str
     procedure: str
     status: str = "예정"
-    time: str = ""  # 시작 시각 HH:MM. 비어 있으면 시각 미정 (빈자리 예약표에는 넣지 못한다)
+    time: str = ""  # 시작 시각 HH:MM. 비어 있으면 시각 미정
 
 
 @dataclass

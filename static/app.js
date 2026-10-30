@@ -243,7 +243,6 @@ function draftCard(v) {
       <button class="primary" id="approve-btn" ${v.reply_window?.state === "closed" ? "disabled" : ""}>승인하고 발송</button>
       <button id="regen-btn">다시 생성</button>
       ${v.status !== "escalated" ? `<button id="escalate-btn">담당자에게 넘기기</button>` : ""}
-      ${a.intent === "예약·일정" ? `<button id="binjari-btn">빈자리에서 빈 시간 보기</button>` : ""}
     </div>
     <div id="escalate-slot"></div>
   </div>`;
@@ -273,7 +272,6 @@ function bindDetail(v) {
   $("#approve-btn")?.addEventListener("click", approve);
   $("#regen-btn")?.addEventListener("click", regenerate);
   $("#escalate-btn")?.addEventListener("click", showEscalateForm);
-  $("#binjari-btn")?.addEventListener("click", () => switchTab("binjari"));
   document.querySelectorAll("[data-source]").forEach((btn) =>
     btn.addEventListener("click", () => showSource(v.sources.find((s) => s.id === btn.dataset.source))));
 }
@@ -507,14 +505,7 @@ function switchTab(view) {
   document.body.className = `view-${view}`;
   document.querySelectorAll("#views button").forEach((b) => b.classList.toggle("active", b.dataset.view === view));
   if (view === "recall") window.openRecallView?.();
-  else if (view === "binjari") {
-    // 처음에만 불러온다. 그 뒤로는 새로 고치지 않고 '다시 읽어' 신호만 보낸다 — 빈자리가 feed.js(지금 시각·CRM 예약)를
-    // 다시 읽어 값만 바꾸므로 통화 중 고른 안건·칸이 남는다. (빈자리는 열어 둔 동안에도 1분마다 스스로 다시 읽는다.)
-    const frame = $("#binjari-frame");
-    const w = frame.contentWindow;
-    if (!frame.getAttribute("src") || !w || w.location.href === "about:blank") frame.setAttribute("src", "/binjari/");
-    else w.dispatchEvent(new Event("binjari-refresh"));
-  } else refresh().then(reloadInboxCRM);  // 리콜 탭에서 바뀐 동의가 문의함 CRM 패널에도 보이게
+  else refresh().then(reloadInboxCRM);  // 리콜 탭에서 바뀐 동의가 문의함 CRM 패널에도 보이게
 }
 
 refresh();
