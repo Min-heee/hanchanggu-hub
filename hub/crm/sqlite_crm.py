@@ -105,13 +105,16 @@ class SqliteCRM(CRMAdapter):
         return self.get(rows[0]["id"]) if rows else None
 
     def create_lead(self, *, name: str, phone: str, email: str, language: str, channel: str, channel_user_id: str) -> Customer:
-        count = self._query("SELECT COUNT(*) AS n FROM customers WHERE id LIKE 'L%'")[0]["n"]
-        customer_id = f"L{count + 1:03d}"
-        self._write(
-            f"INSERT INTO customers ({_CUSTOMER_COLUMNS}) VALUES (?, ?, ?, ?, ?, ?, ?, 0, 0)",
-            (customer_id, name, phone, normalize_phone(phone), email, language, json.dumps(["신규 문의"], ensure_ascii=False)),
-        )
-        self.link_channel(customer_id, channel, channel_user_id)
+        with closing(self._db()) as db, db:
+            # 번호를 세고 넣는 사이에 다른 승인이 같은 번호를 집으면 INSERT가 실패한다(답장은 이미 나간 뒤). 쓰기 잠금을 먼저 잡는다.
+            db.execute("BEGIN IMMEDIATE")
+            count = db.execute("SELECT COUNT(*) AS n FROM customers WHERE id LIKE 'L%'").fetchone()["n"]
+            customer_id = f"L{count + 1:03d}"
+            db.execute(
+                f"INSERT INTO customers ({_CUSTOMER_COLUMNS}) VALUES (?, ?, ?, ?, ?, ?, ?, 0, 0)",
+                (customer_id, name, phone, normalize_phone(phone), email, language, json.dumps(["신규 문의"], ensure_ascii=False)),
+            )
+            db.execute("INSERT OR REPLACE INTO channel_links VALUES (?, ?, ?)", (channel, channel_user_id, customer_id))
         return self.get(customer_id)
 
     def link_channel(self, customer_id: str, channel: str, channel_user_id: str) -> None:

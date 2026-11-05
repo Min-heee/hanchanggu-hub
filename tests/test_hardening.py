@@ -255,3 +255,44 @@ def test_send_with_unknown_outcome_is_not_reported_as_sent():
             TalkTalkClient("k", url=fake.url).send_text("user", "안녕하세요")
     finally:
         fake.close()
+
+
+def test_bulk_approve_keeps_going_when_one_item_is_held_at_recheck(hub, recall):
+    # 계획한 뒤 긴급 문의가 들어온 고객의 안내는 재확인에서 보류되고, 나머지 정보성 안내는 그대로 승인된다
+    recall.plan(recall.today)
+    day = recall.today.isoformat()
+    ready = [i for i in recall.items(day) if i["status"] == "ready" and i["delivery"] == "template" and i["kind"] == "정보성"]
+    held = next(i for i in ready if i["rule_id"] != "appointment_reminder")
+    customer = hub.crm.get(held["customer_id"])
+    channel, user = next(iter(customer.channel_ids.items()))
+    hub.ingest([InboundMessage(id="urgent-after-plan", channel=channel, channel_user_id=user, sender_name=customer.name,
+                               text="수술 부위에서 피가 계속 나요", received_at=f"{day}T11:30")])
+
+    client = TestClient(create_app(hub, recall))
+    res = client.post("/api/recall/approve-info", json={"offset_days": 0})
+    assert res.status_code == 200
+    assert res.json()["approved"] == len(ready) - 1
+    assert recall.store.get(held["id"])["status"] == "blocked"
+
+
+@pytest.mark.parametrize("crm_kind", ["sqlite", "csv"])
+def test_leads_created_at_the_same_time_get_different_ids(tmp_path, crm_kind):
+    crm = build_hub(runtime=tmp_path, crm_kind=crm_kind, llm="offline", today=TODAY).crm
+    crm.reset([])
+    barrier, ids, errors = threading.Barrier(6), [], []
+
+    def create(n):
+        barrier.wait()
+        try:
+            ids.append(crm.create_lead(name=f"문의자{n}", phone="", email="", language="ko", channel="kakao", channel_user_id=f"u{n}").id)
+        except Exception as e:  # 답장을 보낸 뒤라 여기서 실패하면 '발송 완료'로 바뀌지 않는다
+            errors.append(e)
+
+    threads = [threading.Thread(target=create, args=(n,)) for n in range(6)]
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join()
+    assert not errors
+    assert sorted(ids) == [f"L{n:03d}" for n in range(1, 7)]
+    assert all(crm.find_by_channel("kakao", f"u{n}") for n in range(6))

@@ -418,7 +418,10 @@ class RecallEngine:
         for item in self.store.items_for(day):
             rule = self.rules_by_id[item["rule_id"]]
             if item["status"] == "ready" and rule.delivery == "template" and not rule.is_ad and not item["flags"]:
-                self.approve(item["id"], handled_by=handled_by)
+                try:
+                    self.approve(item["id"], handled_by=handled_by)
+                except ValueError:  # 승인 직전 재확인에서 막힌 건은 보류로 남기고 나머지는 계속 승인한다
+                    continue
                 count += 1
         return count
 
